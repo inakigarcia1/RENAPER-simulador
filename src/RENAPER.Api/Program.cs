@@ -13,7 +13,7 @@ namespace RENAPER.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = builder.Configuration.GetConnectionString("RenderInternal");
             
             builder.Services.AddDbContext<RenaperDbContext>(options =>
                 options.UseNpgsql(connectionString));
@@ -28,6 +28,17 @@ namespace RENAPER.Api
             {
                 c.OperationFilter<ApiKeyHeader>();
             });
+			
+			builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.AllowAnyOrigin() // Allows requests from any origin
+                  .AllowAnyHeader()   // Allows any headers to be sent
+                  .AllowAnyMethod();  // Allows any HTTP methods (GET, POST, PUT, DELETE, etc.)
+        });
+});
 
             var app = builder.Build();
 
@@ -39,6 +50,7 @@ namespace RENAPER.Api
             }
 
             app.UseHttpsRedirection();
+			app.UseCors("AllowAllOrigins"); // Apply the named CORS policy
 
             app.UseAuthorization();
 
