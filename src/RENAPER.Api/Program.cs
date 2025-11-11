@@ -30,15 +30,14 @@ namespace RENAPER.Api
             });
 			
 			builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        policy =>
-        {
-            policy.AllowAnyOrigin() // Allows requests from any origin
-                  .AllowAnyHeader()   // Allows any headers to be sent
-                  .AllowAnyMethod();  // Allows any HTTP methods (GET, POST, PUT, DELETE, etc.)
-        });
-});
+            {
+                options.AddDefaultPolicy(policy =>
+                {
+                    policy.WithOrigins("https://venerable-sopapillas-fa743c.netlify.app")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -50,7 +49,7 @@ namespace RENAPER.Api
             }
 
             app.UseHttpsRedirection();
-			app.UseCors("AllowAllOrigins"); // Apply the named CORS policy
+			app.UseCors(); // Apply the named CORS policy
 
             app.UseAuthorization();
 
