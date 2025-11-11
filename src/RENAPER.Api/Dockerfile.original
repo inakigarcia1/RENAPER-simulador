@@ -12,12 +12,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/RENAPER.Api/RENAPER.Api.csproj", "src/RENAPER.Api/"]
-COPY ["src/RENAPER.Aplicacion/RENAPER.Aplicacion.csproj", "src/RENAPER.Aplicacion/"]
-COPY ["src/RENAPER.Dominio/RENAPER.Dominio.csproj", "src/RENAPER.Dominio/"]
-RUN dotnet restore "./src/RENAPER.Api/RENAPER.Api.csproj"
+COPY ["RENAPER.Api/RENAPER.Api.csproj", "RENAPER.Api/"]
+COPY ["RENAPER.Aplicacion/RENAPER.Aplicacion.csproj", "RENAPER.Aplicacion/"]
+COPY ["RENAPER.Dominio/RENAPER.Dominio.csproj", "RENAPER.Dominio/"]
+RUN dotnet restore "./RENAPER.Api/RENAPER.Api.csproj"
 COPY . .
-WORKDIR "/src/src/RENAPER.Api"
+WORKDIR "/src/RENAPER.Api"
 RUN dotnet build "./RENAPER.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
