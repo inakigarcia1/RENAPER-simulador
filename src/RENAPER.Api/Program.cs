@@ -33,7 +33,7 @@ namespace RENAPER.Api
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.WithOrigins("https://venerable-sopapillas-fa743c.netlify.app")
+                    policy.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
